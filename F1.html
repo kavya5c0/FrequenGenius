@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unique Frequency Calculator</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        color: white; /* Set text color to white for better visibility */
+    }
+    #container {
+        background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background for better readability */
+        padding: 20px;
+        border-radius: 10px;
+    }
+    #output {
+        margin-top: 20px;
+    }
+</style>
+</head>
+<body>
+    <div id="container">
+        <h2>Unique Frequency Calculator</h2>
+        <label for="inputString">Enter a string:</label>
+        <input type="text" id="inputString">
+        <button onclick="calculateFrequency()">Calculate Frequency</button>
+        <div id="output"></div>
+
+        <div id="editDeleteOptions" style="display:none;">
+            <h3>Edit/Delete Options</h3>
+            <label for="editCharacter">Character to Edit:</label>
+            <input type="text" id="editCharacter">
+            <label for="newCharacter">New Character:</label>
+            <input type="text" id="newCharacter">
+            <button onclick="editCharacter()">Edit</button>
+            <br>
+            <label for="deleteCharacter">Character to Delete:</label>
+            <input type="text" id="deleteCharacter">
+            <button onclick="deleteCharacter()">Delete</button>
+        </div>
+    </div>
+
+    <script>
+        function calculateFrequency() {
+            var inputString = document.getElementById("inputString").value;
+            var frequency = {};
+            for (var i = 0; i < inputString.length; i++) {
+                var char = inputString.charAt(i);
+                if (frequency[char]) {
+                    frequency[char]++;
+                } else {
+                    frequency[char] = 1;
+                }
+            }
+
+            var outputDiv = document.getElementById("output");
+            outputDiv.innerHTML = "<h3>Character frequencies:</h3>";
+            for (var key in frequency) {
+                outputDiv.innerHTML += "'" + key + "': " + frequency[key] + "<br>";
+            }
+
+            var editDeleteOptions = document.getElementById("editDeleteOptions");
+            editDeleteOptions.style.display = "block";
+        }
+
+        function editCharacter() {
+            var editCharacter = document.getElementById("editCharacter").value;
+            var newCharacter = document.getElementById("newCharacter").value;
+            var inputString = document.getElementById("inputString").value;
+            var updatedString = inputString.replace(editCharacter, newCharacter);
+            document.getElementById("inputString").value = updatedString;
+            calculateFrequency();
+        }
+
+        function deleteCharacter() {
+            var deleteCharacter = document.getElementById("deleteCharacter").value;
+            var inputString = document.getElementById("inputString").value;
+            var updatedString = inputString.split(deleteCharacter).join("");
+            document.getElementById("inputString").value = updatedString;
+            calculateFrequency();
+        }
+    </script>
+</body>
+</html>
